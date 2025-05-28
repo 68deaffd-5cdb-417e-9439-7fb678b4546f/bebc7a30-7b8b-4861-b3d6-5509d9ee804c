@@ -1,0 +1,32 @@
+# Use root/example as user/password credentials
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    # (this is just an example, not intended to be a production configuration)
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 9999:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: example
+      UPLOAD_LIMIT: 300M
+
+
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"

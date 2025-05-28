@@ -1,0 +1,46 @@
+{
+  "realm": "demo_realm",
+  "enabled": true,
+  "accessTokenLifespan": 1800,
+  "clients": [
+    {
+      "clientId": "demo_client",
+      "enabled": true,
+      "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [],
+      "secret": "demo_client_secret123!"
+    }
+  ],
+  "users": [
+    {
+      "username": "demo",
+      "enabled": true,
+      "clientRoles": {
+        "demo_client": [
+          "member"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo",
+          "temporary": false
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "client": {
+      "demo_client": [
+        {
+          "name": "member",
+          "description": "Member role"
+        }
+      ]
+    }
+  }
+}

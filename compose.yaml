@@ -1,0 +1,44 @@
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: demo
+      MYSQL_DATABASE: demo
+    ports:
+      - 9001:3306
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 9002:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: demo
+      UPLOAD_LIMIT: 300M
+
+  keycloak:
+    build: keycloak\.
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - 8080:8080
+
+  backend:
+    depends_on:
+      - db
+      - keycloak
+    build: backend\.
+    ports:
+      - 9004:8000
+
+  frontend:
+    depends_on:
+      - backend
+    build: frontend\.
+    ports:
+      - 80:3000
+
